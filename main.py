@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello_world():
     theme_color = "#2D5A27"  # Forest Green
-    message = "Happy Holidays! 🎄"
+    message = "Happy Holidays! ☃️"
     
     return render_template("index.html", color=theme_color, msg=message)
 
