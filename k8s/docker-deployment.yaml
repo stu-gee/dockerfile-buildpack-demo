@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-docker-deployment
+  labels:
+    app: my-dockerfile-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-dockerfile-app
+  template:
+    metadata:
+      labels:
+        app: my-dockerfile-app
+    spec:
+      containers:
+      - name: my-dockerfile-app
+        image: us-west1-docker.pkg.dev/gke-playground-477517/dockerfile/my-app:v2
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-dockerfile-app-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-dockerfile-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
