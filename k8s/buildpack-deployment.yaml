@@ -16,12 +16,14 @@ spec:
     spec:
       containers:
       - name: my-buildpack-app
-        image: us-west1-docker.pkg.dev/gke-playground-477517/buildpack/my-app:v2
+        image: us-west1-docker.pkg.dev/gke-playground-477517/buildpack/my-app:v3
         ports:
         - containerPort: 8080
         env:
         - name: PORT
           value: "8080"
+        - name: DEPLOY_TYPE
+          value: "buildpack"
 ---
 apiVersion: v1
 kind: Service

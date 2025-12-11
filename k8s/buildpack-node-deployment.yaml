@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-docker-deployment
+  name: my-buildpack-node-app-deployment
   labels:
-    app: my-dockerfile-app
+    app: my-buildpack-node-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: my-dockerfile-app
+      app: my-buildpack-node-app
   template:
     metadata:
       labels:
-        app: my-dockerfile-app
+        app: my-buildpack-node-app
     spec:
       containers:
-      - name: my-dockerfile-app
-        image: us-west1-docker.pkg.dev/gke-playground-477517/dockerfile/my-app:v6
+      - name: my-buildpack-node-app
+        image: us-west1-docker.pkg.dev/gke-playground-477517/buildpack/my-node-app:v1
         ports:
         - containerPort: 8080
         env:
         - name: PORT
           value: "8080"
         - name: DEPLOY_TYPE
-          value: "dockerfile"
+          value: "buildpack"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-dockerfile-app-lb
+  name: my-buildpack-node-app-lb
 spec:
   type: LoadBalancer
   selector:
-    app: my-dockerfile-app
+    app: my-buildpack-node-app
   ports:
   - protocol: TCP
     port: 80
